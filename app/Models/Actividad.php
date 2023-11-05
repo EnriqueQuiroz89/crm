@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PhpParser\Node\Stmt\Return_;
 
 class Actividad extends Model
 {
@@ -15,4 +16,17 @@ class Actividad extends Model
     protected $fillable = ['id_cliente', 'id_usuario', 'tipo_actividad', 'fecha_limite', 'resumen', 'descripcion', 'prioridad'];
     protected $guarded = [];
     public $timestamps = false;
+
+
+    // public function catalogoActividad()
+    // {
+    //     return $this->belongsTo(CatalogoActividad::class);
+    // }
+
+
+    public function listadoActividadesParaCalendario()
+    {
+        $post = Actividad::with('catalogoActividad')->find(1);
+        return $post;
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Calendario;
 use App\Models\Actividad;
+use App\Models\CatalogoActividad;
 use Illuminate\Http\Request;
 
 class CalendarioController extends Controller
@@ -13,15 +14,33 @@ class CalendarioController extends Controller
      */
     public function index()
     {
-
-
         // $datos = TuModelo::all();
+        $catalogoDeActividades = CatalogoActividad::all();
+
+        // echo "<pre>";
+        // print_r($catalogoDeActividades);
+        // echo "</pre>";
+
+        foreach ($catalogoDeActividades as $key => $objetoTipoActividad) {
+            echo "<pre>";
+            // print_r($objetoTipoActividad['attributes']);
+            print_r($objetoTipoActividad->attributes);
+
+            echo "</pre>";  
+
+
+
+        }
 
         //
         $listadoDeActividades = Actividad::all();
         $eventos = [];
 
+
         foreach ($listadoDeActividades as $actividad) {
+
+
+
             $evento = [
                 'title' => $actividad->id_actividad, // Reemplaza con el nombre del campo de título en tu tabla
                 'start' => $actividad->fecha_limite, // Reemplaza con el nombre del campo de fecha de inicio en tu tabla

@@ -14,4 +14,9 @@ class CatalogoActividad extends Model
     public $timestamps = false;
 
     // Agrega relaciones o métodos adicionales según sea necesario
+
+    // public function actividad()
+    // {
+    //     return $this->hasMany(Actividad::class);
+    // }
 }

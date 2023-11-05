@@ -27,7 +27,7 @@
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      initialDate: '2023-01-12',
+     // initialDate: '2023-01-12',
       navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
