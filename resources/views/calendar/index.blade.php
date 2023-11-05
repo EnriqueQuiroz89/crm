@@ -1,24 +1,25 @@
 @extends('Principal')
 {{-- EN la plantilla principal existe un YIELD llamado 'contenido' por ende
-    En esta vista secundaria que extiende de Principal
-    lo que queremos que aparezca en lugar de YIELD debe ir en una seccion acotada 
-    llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal 
-    --}}
+En esta vista secundaria que extiende de Principal
+lo que queremos que aparezca en lugar de YIELD debe ir en una seccion acotada
+llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal
+--}}
 
 @section('contenido')
-{{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth'
-            });
-            calendar.render();
-        });
-    </script> --}}
+{{--
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth'
+    });
+    calendar.render();
+  });
+</script> --}}
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -27,11 +28,11 @@
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-     // initialDate: '2023-01-12',
+      // initialDate: '2023-01-12',
       navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
-      select: function(arg) {
+      select: function (arg) {
         var title = prompt('Event Title:');
         if (title) {
           calendar.addEvent({
@@ -43,7 +44,7 @@
         }
         calendar.unselect()
       },
-      eventClick: function(arg) {
+      eventClick: function (arg) {
         if (confirm('Are you sure you want to delete this event?')) {
           arg.event.remove()
         }
@@ -112,7 +113,7 @@
       // ]
     });
 
-    calendar.render();
+  calendar.render();
   });
 </script>
 
