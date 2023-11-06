@@ -23,12 +23,12 @@ class ActividadController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($clienteSeleccionado = 0)
     {
         $listadoDeClientes = Cliente::all();
         $catalogoActividades = CatalogoActividad::all();
 
-        return view('actividad.create_form', compact('listadoDeClientes', 'catalogoActividades'));
+        return view('actividad.create_form', compact('listadoDeClientes', 'catalogoActividades', 'clienteSeleccionado'));
     }
 
 
@@ -94,6 +94,14 @@ class ActividadController extends Controller
     public function show(Actividad $actividad)
     {
         //
+        $actividad = Actividad::find(1);
+
+        // echo "<pre>";
+        // print_r($actividad);
+        // echo "</pre>";
+
+        // return;
+        // return view('actividad.info', compact('actividad'));
     }
 
     /**

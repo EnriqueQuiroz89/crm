@@ -48,24 +48,19 @@ class CalendarioController extends Controller
             // [1] => Array ( 
             //     [id] => 1 
             //     [nombre_actividad] => Llamada telefónica 
-            //     [descripcion] => )
+            //     [descripcion] => )i
 
-
-            $cliente =     $this->obtenerClientePorId(1);
-
-
+            $idCliente =  $actividad->id_cliente;
+            $cliente = $this->obtenerClientePorId($idCliente);
             $nombreCliente = $cliente['nombre'];
-            // echo "<pre>";
-            // print_r($cliente['nombre']);
-            // echo "</pre>";
 
-            // return;
+            $nombreActividad = $arregloClaveValorActividades[$idActividad]['nombre_actividad'];
 
             $titulo = $nombreCliente;
             $titulo .= " - ";
             $titulo .= $arregloClaveValorActividades[$idActividad]['nombre_actividad'];
 
-
+            $html = "<b>$nombreCliente</b><br>$nombreActividad";
 
             $evento = [
                 // 'title' => $actividad->id_actividad, // Reemplaza con el nombre del campo de título en tu tabla
@@ -73,6 +68,9 @@ class CalendarioController extends Controller
                 'start' => $actividad->fecha_limite, // Reemplaza con el nombre del campo de fecha de inicio en tu tabla
                 'end' => $actividad->fecha_limite, // Reemplaza con el nombre del campo de fecha de fin en tu tabla
                 // Agrega más actividads si es necesario para personalizar el evento
+                // 'html' => '<b>HTML personalizado para el evento 2</b><br/>Otro contenido HTML si es necesario'
+                'html' => $html
+
             ];
 
             $eventos[] = $evento;

@@ -19,20 +19,22 @@ llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
+
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
+
       // initialDate: '2023-01-12',
       navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
-      select: function (arg) {
+      select: function(arg) {
         var title = prompt('Event Title:');
         if (title) {
           calendar.addEvent({
@@ -44,15 +46,37 @@ llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal
         }
         calendar.unselect()
       },
-      eventClick: function (arg) {
-        if (confirm('Are you sure you want to delete this event?')) {
-          arg.event.remove()
-        }
+      eventClick: function(arg) {
+
+        mostrarDetalleDelEvento();
+
+
+        // if (confirm('Are you sure you want to delete this event?')) {
+        //   arg.event.remove()
+        // }
       },
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
 
-      events: {!! json_encode($eventos) !!} // Aquí está la corrección
+      // eventContent: function(arg) {
+      //   return {
+      //     html: '<b>' + arg.timeText + '</b><br/>' +
+      //       '<span>' + arg.event.title + '</span>'
+      //   };
+      // },
+
+      eventContent: function(arg) {
+        return {
+          html: arg.event.extendedProps.html // Mostrar el HTML personalizado para el evento
+        };
+      },
+
+      events: {
+        // !!json_encode($eventos) !!
+        events: @json($eventos)
+
+      } // Aquí está la corrección
+
 
 
       // events: [
@@ -113,8 +137,22 @@ llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal
       // ]
     });
 
-  calendar.render();
+    calendar.render();
   });
+
+
+
+  function mostrarDetalleDelEvento() {
+    alert("Hola");
+
+    $("#container-calendar").removeClass("col-12").addClass("col-6");
+
+    $("#container-info-evento").removeClass("d-none").addClass("col-6");
+
+
+    // $(selector).removeClass(className);
+
+  }
 </script>
 
 <div class="card my-3">
@@ -123,10 +161,40 @@ llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal
   </div>
   <div class="card-body">
     <h5 class="card-title">What do??</h5>
-    <div id='calendar'></div>
+
+    <div class="row">
+      <div class="col-12 container" id="container-calendar">
+        <div id='calendar'></div>
+      </div>
+      <div class="d-none" id="container-info-evento">Informacion del evento</div>
+    </div>
+
+
+
   </div>
 
 </div>
 
-{{-- <div id='calendar'></div> --}}
+
+<script>
+  $(document).ready(function() {
+    $.ajax({
+      url: "{{ route('actividad.show') }}", // No se pasa ningún parámetro en la ruta
+      type: 'GET',
+      success: function(response) {
+        // Aquí puedes manejar la respuesta de la llamada AJAX
+        console.log(response);
+          // Agregar la respuesta como HTML al contenedor deseado
+          // $('#container-info-evento').html(response);
+      },
+      error: function(error) {
+        // Manejo de errores en caso de que ocurra algún problema con la llamada AJAX
+        console.error('Error en la solicitud AJAX:', error);
+      }
+    });
+
+  });
+</script>
+
+<!-- {{-- <div id='calendar'></div> --}} -->
 @endsection
