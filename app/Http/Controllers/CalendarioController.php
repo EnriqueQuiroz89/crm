@@ -44,6 +44,11 @@ class CalendarioController extends Controller
         $eventos = [];
 
         foreach ($listadoDeActividades as $actividad) {
+
+            echo "<pre>";
+            print_r($actividad->id);
+            echo "</pre>";
+
             $idActividad = $actividad->id_actividad;
             // [1] => Array ( 
             //     [id] => 1 
@@ -63,7 +68,8 @@ class CalendarioController extends Controller
             $html = "<b>$nombreCliente</b><br>$nombreActividad";
 
             $evento = [
-                // 'title' => $actividad->id_actividad, // Reemplaza con el nombre del campo de título en tu tabla
+                'id_actividad' => $idActividad,  // Incluye el identificador del evento
+                'id_evento' => $actividad->id,  // Incluye el identificador del evento
                 'title' => $titulo, // Reemplaza con el nombre del campo de título en tu tabla
                 'start' => $actividad->fecha_limite, // Reemplaza con el nombre del campo de fecha de inicio en tu tabla
                 'end' => $actividad->fecha_limite, // Reemplaza con el nombre del campo de fecha de fin en tu tabla

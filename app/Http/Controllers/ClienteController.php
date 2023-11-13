@@ -76,7 +76,7 @@ class ClienteController extends Controller
     public function destroy($id)
     {
 
-        echo "<pre>ID: $id</pre>";
+        // echo "<pre>ID: $id</pre>";
 
         $clientes = Cliente::find($id);
         echo "<pre>";

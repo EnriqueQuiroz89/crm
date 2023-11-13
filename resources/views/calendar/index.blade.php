@@ -24,6 +24,9 @@ llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
 
+      aspectRatio: 1.5, // Puedes ajustar este valor según tus necesidades
+  // ... (otras opciones)
+
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
@@ -46,11 +49,15 @@ llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal
         }
         calendar.unselect()
       },
+
+      //       eventClick: function(arg) {
+      //     mostrarDetalleDelEvento(arg.event.id); // Pasar el id del evento
+      // },
+
+
       eventClick: function(arg) {
-
-        mostrarDetalleDelEvento();
-
-
+        var id_evento = arg.event.extendedProps.id_evento;
+        mostrarDetalleDelEvento(id_evento);
         // if (confirm('Are you sure you want to delete this event?')) {
         //   arg.event.remove()
         // }
@@ -77,82 +84,10 @@ llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal
 
       } // Aquí está la corrección
 
-
-
-      // events: [
-      //   {
-      //     title: 'All Day Event',
-      //     start: '2023-01-01'
-      //   },
-      //   {
-      //     title: 'Long Event',
-      //     start: '2023-01-07',
-      //     end: '2023-01-10'
-      //   },
-      //   {
-      //     groupId: 999,
-      //     title: 'Repeating Event',
-      //     start: '2023-01-09T16:00:00'
-      //   },
-      //   {
-      //     groupId: 999,
-      //     title: 'Repeating Event',
-      //     start: '2023-01-16T16:00:00'
-      //   },
-      //   {
-      //     title: 'Conference',
-      //     start: '2023-01-11',
-      //     end: '2023-01-13'
-      //   },
-      //   {
-      //     title: 'Meeting',
-      //     start: '2023-01-12T10:30:00',
-      //     end: '2023-01-12T12:30:00'
-      //   },
-      //   {
-      //     title: 'Lunch',
-      //     start: '2023-01-12T12:00:00'
-      //   },
-      //   {
-      //     title: 'Meeting',
-      //     start: '2023-01-12T14:30:00'
-      //   },
-      //   {
-      //     title: 'Happy Hour',
-      //     start: '2023-01-12T17:30:00'
-      //   },
-      //   {
-      //     title: 'Dinner',
-      //     start: '2023-01-12T20:00:00'
-      //   },
-      //   {
-      //     title: 'Birthday Party',
-      //     start: '2023-01-13T07:00:00'
-      //   },
-      //   {
-      //     title: 'Click for Google',
-      //     url: 'http://google.com/',
-      //     start: '2023-01-28'
-      //   }
-      // ]
     });
 
     calendar.render();
   });
-
-
-
-  function mostrarDetalleDelEvento() {
-    alert("Hola");
-
-    $("#container-calendar").removeClass("col-12").addClass("col-6");
-
-    $("#container-info-evento").removeClass("d-none").addClass("col-6");
-
-
-    // $(selector).removeClass(className);
-
-  }
 </script>
 
 <div class="card my-3">
@@ -162,14 +97,21 @@ llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal
   <div class="card-body">
     <h5 class="card-title">What do??</h5>
 
+    <div class="d-none container-fluid my-2" id="container-info-evento">Informacion del evento</div>
+
     <div class="row">
-      <div class="col-12 container" id="container-calendar">
-        <div id='calendar'></div>
+      <div class="col-12 container-fluid my-2" id="container-calendar">
+
+        <div class="card">
+          <div class="card-header">
+            Calendario
+          </div>
+          <div class="card-body">
+            <div id='calendar'></div>
+          </div>
+        </div>
       </div>
-      <div class="d-none" id="container-info-evento">Informacion del evento</div>
     </div>
-
-
 
   </div>
 
@@ -177,23 +119,31 @@ llamada 'contenido', lo que se acota en esta seccion reemplazara a Principal
 
 
 <script>
-  $(document).ready(function() {
+
+
+  function mostrarDetalleDelEvento(eventoId) {
+
+    // $("#container-calendar").removeClass("col-12").addClass("col-6").addClass("container-fluid");
+    $("#container-info-evento").removeClass("d-none").addClass("col-12 mx-auto");
+    // Resto del código para manipular el DOM
+
+    // Llamada AJAX
     $.ajax({
-      url: "{{ route('actividad.show') }}", // No se pasa ningún parámetro en la ruta
       type: 'GET',
-      success: function(response) {
-        // Aquí puedes manejar la respuesta de la llamada AJAX
-        console.log(response);
-          // Agregar la respuesta como HTML al contenedor deseado
-          // $('#container-info-evento').html(response);
+      url: 'actividad/' + eventoId,
+
+      success: function(data) {
+        // Manipula la respuesta de la llamada AJAX según tus necesidades
+        console.log(data);
+        $('#container-info-evento').html(data);
+        // console.log("Exito");
       },
       error: function(error) {
-        // Manejo de errores en caso de que ocurra algún problema con la llamada AJAX
-        console.error('Error en la solicitud AJAX:', error);
+        // Maneja el error si la llamada AJAX falla
+        console.error('Error en la llamada AJAX:', error);
       }
     });
-
-  });
+  }
 </script>
 
 <!-- {{-- <div id='calendar'></div> --}} -->

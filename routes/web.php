@@ -41,12 +41,15 @@ Route::resource('home', ClienteController::class);
 // Vamos a retornar un resourse que es el controller ya que a su vez retorna una vista
 // Route::get('actividad', [\App\Http\Controllers\ActividadController::class, 'index'])->name('actividad');
 // Habilita la ruta para recibir peticiones HTTP  por ejemplo home.store
-Route::resource('actividad', ActividadController::class);
+// Route::resource('actividad', ActividadController::class);
 // Puedes responder vistas directas sin pasar por el controler
 Route::get('/actividad/create/{cliente?}', [\App\Http\Controllers\ActividadController::class, 'create'])->name('actividad.create');
-
 // 
 Route::get('/actividad/{id?}', [\App\Http\Controllers\ActividadController::class, 'show'])->name('actividad.show');
+// Route::match(['get', 'post'],'/actividad/{id?}', [\App\Http\Controllers\ActividadController::class, 'show'])->name('actividad.show');
+
+// Route::get('/actividad/{id?}', [\App\Http\Controllers\ActividadController::class, 'show'])->name('actividad.show');
+
 
 
 // Route::get('/actividad/{id?}', function ($id = null) {

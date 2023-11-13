@@ -23,6 +23,11 @@ class Actividad extends Model
     //     return $this->belongsTo(CatalogoActividad::class);
     // }
 
+    // En el modelo Actividad, establece la relación inversa con NotaActividad:
+    public function notas()
+    {
+        return $this->hasMany(NotaActividad::class);
+    }
 
     public function listadoActividadesParaCalendario()
     {

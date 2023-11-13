@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Actividad;
 use App\Models\Cliente;
+use App\Models\NotaActividad;
 use App\Models\Cata;
 use App\Models\CatalogoActividad;
 use Illuminate\Http\Request;
@@ -88,20 +89,37 @@ class ActividadController extends Controller
     }
 
 
+    public function mostrarDetallesEvento($id)
+    {
+        // $actividad = Actividad::with('notas')->find($id);
+        // return view('detalles_evento', ['evento' => $evento]);
+    }
+
+
+
     /**
      * Display the specified resource.
      */
-    public function show(Actividad $actividad)
+    public function show($idActividad)
     {
-        //
-        $actividad = Actividad::find(1);
-
+        $actividad = Actividad::find($idActividad);
+        $idCliente = $actividad->id_cliente;
         // echo "<pre>";
-        // print_r($actividad);
+        // print_r($idCliente);
+        // echo "</pre>";
+        // return;
+        $cliente = Cliente::find($idCliente);
+        $notas = NotaActividad::find($idActividad);
+        // echo "<pre>";
+        // print_r($notas);
+        // echo "</pre>";
+        // echo "<pre>";
+        // print_r($actividad);        
         // echo "</pre>";
 
-        // return;
         // return view('actividad.info', compact('actividad'));
+
+        return view('actividad.detalle', compact('actividad', 'cliente', 'notas'));
     }
 
     /**
